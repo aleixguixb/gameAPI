@@ -11,5 +11,11 @@ public interface GameApi {
     ResponseEntity<Game> saveGame(@RequestBody Game game);
     @GetMapping("/{id}")
     ResponseEntity<Game> getGameById(@PathVariable String id);
+
     // PUT + DELETE ??
+    @PutMapping
+    ResponseEntity<Game> updateGame(@RequestBody Game game);
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> deleteGame(@PathVariable String id);
 }

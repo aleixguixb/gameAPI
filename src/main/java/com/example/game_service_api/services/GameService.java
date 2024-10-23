@@ -7,7 +7,6 @@ public interface GameService {
     Game saveGame(Game gameRequest);
     // GET
     Game getGameById(String id);
-
     // PUT
     Game updateGame(Game game);
     // DElETE

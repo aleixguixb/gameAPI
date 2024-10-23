@@ -55,7 +55,7 @@ public class GameController implements GameApi {
      * @param game
      * @return updated game
      */
-    @PutMapping
+    @Override
     public ResponseEntity<Game> updateGame(@RequestBody Game game) {
       try {
           Game updatedGame = this.gameService.updateGame(game);
@@ -65,7 +65,7 @@ public class GameController implements GameApi {
       }
     }
 
-    @DeleteMapping("/{id}")
+    @Override
     public ResponseEntity<Void> deleteGame(@PathVariable String id) {
         try {
             this.gameService.deleteGame(id);
