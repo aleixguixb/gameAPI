@@ -60,4 +60,13 @@ public class GameServiceImpl implements GameService {
         // Guarda el juego actualizado
         return this.gameRepository.save(existingGame);
     }
+
+    @Override
+    public void deleteGame(String id) {
+        Game exisitingGame = this.gameRepository.findById(Long.valueOf(id))
+                .orElseThrow(() -> new GameException(HttpStatus.NOT_FOUND, "Game not found"));
+
+        // Eliminar el juego existente
+        this.gameRepository.delete(exisitingGame);
+    }
 }

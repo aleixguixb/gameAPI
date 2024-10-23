@@ -7,9 +7,7 @@ import com.example.game_service_api.services.GameService;
 import com.example.game_service_api.services.impl.GameServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * The type Game controller
@@ -63,7 +61,17 @@ public class GameController implements GameApi {
           Game updatedGame = this.gameService.updateGame(game);
           return ResponseEntity.ok(updatedGame);
       } catch (GameException e) {
-          return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+          return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
       }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGame(@PathVariable String id) {
+        try {
+            this.gameService.deleteGame(id);
+            return ResponseEntity.noContent().build();
+        } catch (GameException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }
