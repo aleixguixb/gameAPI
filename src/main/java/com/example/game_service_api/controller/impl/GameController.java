@@ -1,10 +1,13 @@
 package com.example.game_service_api.controller.impl;
 
 import com.example.game_service_api.commons.entities.Game;
+import com.example.game_service_api.commons.exceptions.GameException;
 import com.example.game_service_api.controller.GameApi;
 import com.example.game_service_api.services.GameService;
 import com.example.game_service_api.services.impl.GameServiceImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,8 +40,30 @@ public class GameController implements GameApi {
         return ResponseEntity.ok(gameCreated);
     }
 
+    /**
+     * Get the game
+     *
+     * @param id game
+     * @return
+     */
     @Override
     public ResponseEntity<Game> getGameById(String id) {
         return ResponseEntity.ok(this.gameService.getGameById(id));
+    }
+
+    /**
+     * Put (Update) the game
+     *
+     * @param game
+     * @return updated game
+     */
+    @PutMapping
+    public ResponseEntity<Game> updateGame(@RequestBody Game game) {
+      try {
+          Game updatedGame = this.gameService.updateGame(game);
+          return ResponseEntity.ok(updatedGame);
+      } catch (GameException e) {
+          return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+      }
     }
 }

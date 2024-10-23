@@ -40,4 +40,24 @@ public class GameServiceImpl implements GameService {
         return this.gameRepository.findById(Long.valueOf(id))
                 .orElseThrow(() -> new GameException(HttpStatus.NOT_FOUND, "Game not found"));
     }
+
+    /**
+     * Put (Update) a existing game
+     *
+     * @param game the game request
+     * @return
+     */
+    @Override
+    public Game updateGame(Game game) {
+        // comprovamos existe
+        Game existingGame = this.gameRepository.findById(game.getId())
+                .orElseThrow(() -> new GameException(HttpStatus.NOT_FOUND, "Game not found"));
+
+        // Actualizar los campos de Game
+        existingGame.setName(game.getName());
+        existingGame.setUserId(game.getUserId());
+
+        // Guarda el juego actualizado
+        return this.gameRepository.save(existingGame);
+    }
 }
